@@ -1,7 +1,19 @@
 package com.example.demo.bean;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="libros")
+
 public class Libro {
+
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+
 	private int id;
+
+	@Column(name="titulo", nullable=false, length=30)
 	private String titulo;
 	private String autor;
 	private String editorial;
@@ -17,6 +29,8 @@ public class Libro {
 		this.tematica = tematica;
 
 	}
+	
+	public Libro() {}
 
 	public int getId() {
 		return id;

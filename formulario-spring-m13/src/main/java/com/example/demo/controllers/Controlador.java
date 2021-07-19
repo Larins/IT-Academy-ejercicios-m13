@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,28 +14,53 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.bean.Libro;
 import com.example.demo.bean.Usuario;
 import com.example.demo.repository.BaseDatos;
+import com.example.demo.repository.BaseDatos2;
+import com.example.demo.repository.BaseDatos3Service;
 
 @Controller //Lo convertimos en un servlet que atiende peticiones HTTP
-@RequestMapping("")
+@RequestMapping("") //localhost:8080
 public class Controlador {
 
-	BaseDatos bd = new BaseDatos();
+	//BaseDatos bd = new BaseDatos();
+	//BaseDatos2 bd = new BaseDatos2();
+	@Autowired
+	BaseDatos3Service bd;
+
+	//Proyecto PPT propone login hardcodeado
+	//Este sería mi usuario hardcodeado si usara ese método
+	//En su lugar he usado el método compruebaUsuario --> ver Handler login (vía getters)
+	
 	Usuario usuario;
+	
+	/*
+	String loginUser = "Lara";
+	String loginPassword = "1234";
+	*/
 
 	@GetMapping("/")
 	public String iniciar(Model model) {
 		model.addAttribute("titulo","FORMULARIO DE ACCESO");
+		model.addAttribute("info1","Introduce los datos de acceso:");
+		
+		//Con el usuario hardcodeado podíamos mostrar los siguientes datos para facilitar el login
+		//Una vez parametrizado con compruebaUsuario, queda deprecado
+		//model.addAttribute("info2","Usuario: " + loginUser);
+		//model.addAttribute("info3","Password: " + loginPassword);
 		return "login";
 	}
 
 	@PostMapping("/")
 	//Handler login (vía getters)
 	public String login(Usuario usuario, Model model) {
-		if (usuario.getNombre().equals("edu") && usuario.getPassword().equals("edu")) {
+		if (bd.compruebaUsuario(usuario.getNombre(), usuario.getPassword())) {
+		//Cuando el login estaba hardcodeado este código iba dentro del if
+		//usuario.getNombre().equals(loginUser) && usuario.getPassword().equals(loginPassword)
 			ArrayList<Libro> libros = bd.getLibros();
 			model.addAttribute("usuario",usuario);
 			this.usuario = usuario;
 			model.addAttribute("libros",libros);
+			//model.addAttribute("boton","Insertar libro");
+			//model.addAttribute("action","/insertar");
 			return "consulta";
 		} else
 			return "login";
@@ -47,6 +73,8 @@ public class Controlador {
 		ArrayList<Libro> libros = bd.getLibros();
 		model.addAttribute("usuario",this.usuario);
 		model.addAttribute("libros",libros);
+		model.addAttribute("boton","Insertar libro");
+		model.addAttribute("action","/insertar");
 		return "consulta";
 	}
 	

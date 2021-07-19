@@ -10,7 +10,7 @@
       <h1>LISTADO DE LIBROS</h1>
       <table border=1>
          <thead>
-            <tr><th> Id <th> Titulo <th> Autor <th> Editorial <th> Fecha <th> Tematica <th> Borrado
+            <tr><th> Id <th> Titulo <th> Autor <th> Editorial <th> Fecha <th> Tematica <th> Borrado <th> Modificar
             </tr>
          </thead>
          <tbody>
@@ -35,7 +35,12 @@
          <br>AUTOR: <input type=text name=autor th:value="${libro?.autor}">
          <br>EDITORIAL: <input type=text name=editorial th:value="${libro?.editorial}">
          <br>FECHA: <input type=text name=fecha th:value="${libro?.fecha}">
-         <br>TEMATICA: <input type=text name=tematica th:value="${libro?.tematica}">
+         <br>TEMATICA: 
+         <select name="tematica" th:value="${libro?.fecha}">
+    		<option th:value="Terror" th:text="Terror"></option>
+   			<option th:value="Romantica" th:text="Romantica"></option>
+   			<option th:value="Comedia" th:text="Comedia"></option>
+		 </select>
          <br><input type=submit name=submit th:value="${boton}">
       </form>
    </body>
