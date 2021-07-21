@@ -2,6 +2,7 @@ package com.example.demo.bean;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name="libros")
 

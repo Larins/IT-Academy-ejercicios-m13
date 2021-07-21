@@ -12,47 +12,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.bean.Libro;
+import com.example.demo.bean.Tematica;
 import com.example.demo.bean.Usuario;
+import com.example.demo.repository.BaseDatos;
 import com.example.demo.repository.BaseDatos3Service;
 
 @Controller //Lo convertimos en un servlet que atiende peticiones HTTP
 @RequestMapping("") //localhost:8080
 public class Controlador {
 
-	//BaseDatos bd = new BaseDatos();
-	//BaseDatos2 bd = new BaseDatos2();
-	@Autowired
-	BaseDatos3Service bd;
-
-	//Proyecto PPT propone login hardcodeado
-	//Este sería mi usuario hardcodeado si usara ese método
-	//En su lugar he usado el método compruebaUsuario --> ver Handler login (vía getters)
-	
-	Usuario usuario;
-	
-	/*
-	String loginUser = "Lara";
-	String loginPassword = "1234";
-	*/
-
 	@GetMapping("/")
 	public String iniciar(Model model) {
 		model.addAttribute("titulo","FORMULARIO DE ACCESO");
 		model.addAttribute("info1","Introduce los datos de acceso:");
-		
 		//Con el usuario hardcodeado podíamos mostrar los siguientes datos para facilitar el login
 		//Una vez parametrizado con compruebaUsuario, queda deprecado
 		//model.addAttribute("info2","Usuario: " + loginUser);
 		//model.addAttribute("info3","Password: " + loginPassword);
 		return "login";
 	}
+	
+	//El login va a depender de la DB a la que nos conectemos
+	
+	//OPCIÓN 1: BaseDatos.java
+	Usuario usuario;
+	BaseDatos bd = new BaseDatos();
+	//BaseDatos2 bd = new BaseDatos2();
 
-	@PostMapping("/")
+	//Parametrizamos los valores del login para ganar agilidad
+	String loginUser = "lara";
+	String loginPassword = "lara";
+	
 	//Handler login (vía getters)
+	@PostMapping("/")
+	public String login(Usuario usuario, Model model) {
+		if (usuario.getNombre().equals(loginUser) && usuario.getPassword().equals(loginPassword)) {
+			ArrayList<Libro> libros = bd.getLibros();
+			model.addAttribute("usuario",usuario);
+			this.usuario=usuario;
+			model.addAttribute("libros",libros);
+			model.addAttribute("libro", new Libro());
+			model.addAttribute("boton","Insertar libro");
+			model.addAttribute("action","/insertar");
+			return "consulta";
+		} else {
+			return "login";
+		}
+	}
+	
+	//OPCIÓN 2: BaseDatos3Service.java
+	//@Autowired
+	//BaseDatos3Service bd;
+
+	//Login para BaseDatos3
+	/*
 	public String login(Usuario usuario, Model model) {
 		if (bd.compruebaUsuario(usuario.getNombre(), usuario.getPassword())) {
-		//Cuando el login estaba hardcodeado este código iba dentro del if
-		//usuario.getNombre().equals(loginUser) && usuario.getPassword().equals(loginPassword)
 			ArrayList<Libro> libros = bd.getLibros();
 			model.addAttribute("usuario",usuario);
 			this.usuario = usuario;
@@ -63,14 +78,16 @@ public class Controlador {
 		} else
 			return "login";
 	}
+	*/
 
 	//Handler inserción
 	@PostMapping("/insertar")
 	public String insertar(Libro libro, Model model) {
 		bd.inserta(libro);
 		ArrayList<Libro> libros = bd.getLibros();
-		model.addAttribute("usuario",this.usuario);
-		model.addAttribute("libros",libros);
+		model.addAttribute("usuario", this.usuario);
+		model.addAttribute("libros", libros);
+		model.addAttribute("libro", new Libro());
 		model.addAttribute("boton","Insertar libro");
 		model.addAttribute("action","/insertar");
 		return "consulta";
@@ -81,8 +98,9 @@ public class Controlador {
 	public String borrar(@PathVariable int id, Model model) {
 		bd.borrar(id);
 		ArrayList<Libro> libros = bd.getLibros();
-		model.addAttribute("libros", libros);
 		model.addAttribute("usuario", this.usuario);
+		model.addAttribute("libros", libros);
+		model.addAttribute("libro", new Libro());
 		model.addAttribute("boton","Insertar libro");
 		model.addAttribute("action","/insertar");
 		return "consulta";
@@ -93,9 +111,9 @@ public class Controlador {
 	public String modificar(@PathVariable int id, Model model) {
 		Libro libro = bd.getLibro(id);
 		ArrayList<Libro> libros = bd.getLibros();
-		model.addAttribute("libros",libros);
-		model.addAttribute("libro",libro);
-		model.addAttribute("usuario",this.usuario);
+		model.addAttribute("usuario", this.usuario);
+		model.addAttribute("libros", libros);
+		model.addAttribute("libro", libro);
 		model.addAttribute("boton","Actualizar libro");
 		model.addAttribute("action","/modificar");
 		return "consulta";
@@ -106,10 +124,10 @@ public class Controlador {
 	public String modificar2(Libro libro, Model model) {
 		bd.modifica(libro);
 		ArrayList<Libro> libros = bd.getLibros();
-		model.addAttribute("usuario",this.usuario);
-		model.addAttribute("libros",libros);
-		model.addAttribute("libro",null);
-		model.addAttribute("boton","Insertar libro");
+		model.addAttribute("usuario", this.usuario);
+		model.addAttribute("libros", libros);
+		model.addAttribute("libro", new Libro());
+		model.addAttribute("boton","Actualizar libro");
 		model.addAttribute("action","/insertar");
 		return "consulta";
 
