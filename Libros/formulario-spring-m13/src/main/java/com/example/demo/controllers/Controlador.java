@@ -45,7 +45,7 @@ public class Controlador {
 	//String loginUser = "lara";
 	//String loginPassword = "lara";
 	
-	//Login para BaseDatos.java
+	//Handler login para BaseDatos.java
 	/*@PostMapping("/")
 	public String login(Usuario usuario, Model model) {
 		if (usuario.getNombre().equals(loginUser) && usuario.getPassword().equals(loginPassword)) {
@@ -63,8 +63,13 @@ public class Controlador {
 	}*/
 	
 	//OPCIÓN 2: BaseDatos2.java (JDBC)
+	//BaseDatos2 bd = new BaseDatos2();
 
-	BaseDatos2 bd = new BaseDatos2();
+	//OPCIÓN 3: BaseDatos3Service.java (JPA SPRING)
+	@Autowired
+	BaseDatos3Service bd;
+
+	//El handler es el mismo para las opciones 2 y 3
 	@PostMapping("/")
 	public String login(Usuario usuario, Model model) {
 		if (bd.compruebaUsuario(usuario.getNombre(), usuario.getPassword())) {
@@ -81,10 +86,7 @@ public class Controlador {
 			return "login";
 	}
 	
-	//OPCIÓN 3: BaseDatos3Service.java
 
-	//@Autowired
-	//BaseDatos3Service bd;
 
 	//------------------------------------------------- Una vez logeados pasamos a los handlers
 	//Handler inserción

@@ -19,7 +19,10 @@ public class Libro {
 	private String autor;
 	private String editorial;
 	private String fecha;
-	private Tematica tematica;
+	//private Tematica tematica; //Para usar combobox comentamos esta declaración y usamos la siguiente:
+	@Column(name="TEMATICA")
+	@Enumerated(EnumType.STRING)
+	PRIVATE Tematica tematica;
 
 	public Libro(int id, String titulo, String autor, String editorial, String fecha, Tematica tematica) {
 		this.id = id;
