@@ -16,6 +16,8 @@ public class Empleado { //Sustituye a LIBRO
 
 	@Column(name="nombre", nullable=false, length=30)
 	private String nombre;
+	private String salario;
+
 	//Para usar combobox usamos la siguiente declaracion:
 	@Column(name="POSICION")
 	@Enumerated(EnumType.STRING)
@@ -52,5 +54,4 @@ public class Empleado { //Sustituye a LIBRO
 	public void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 	}
-	
 }

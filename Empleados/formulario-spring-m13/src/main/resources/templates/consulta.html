@@ -17,6 +17,7 @@
 				<th>Id
 				<th>Nombre
 				<th>Posicion
+				<th>Salario
 				<th>Borrar
 				<th>Modificar
 			</tr>
@@ -28,7 +29,7 @@
 			<tr th:each="empleado : ${empleados}">
 				<td><span th:text="${empleado.id}"></span></td>
 				<td><span th:text="${empleado.nombre}"></span></td>
-				<td><span th:text="${empleado.posicion}"></span></td>
+				<td><span th:text="${empleado.posicion.puesto}"></span></td>
 				<td><a th:href="@{/borrado/}+${empleado.id}">Borrar</a></td>
 				<td><a th:href="@{/modificar/}+${empleado.id}">Modificar</a></td>
 			</tr>
@@ -43,8 +44,14 @@
 			<option
 				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
 				th:value="${posicion}" th:text="${posicion.puesto}"></option>
-		</select> <br>
-		<input type=submit name=submit th:value="${boton}">
+		</select> 
+		<br>SALARIO:
+		<select th:field="*{posicion}">
+			<option
+				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
+				th:value="${posicion}" th:text="${posicion.salario}"></option>
+		</select> 
+		<br><input type=submit name=submit th:value="${boton}">
 	</form>
 </body>
 </html>
