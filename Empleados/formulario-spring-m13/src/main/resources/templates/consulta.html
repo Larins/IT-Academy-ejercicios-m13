@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>LISTADO DE LIBROS</title>
+</head>
+<body>
+	<h3>
+		Login: <span th:text="${usuario.nombre}"></span> - Password: <span
+			th:text="${usuario.password}"></span>
+	</h3>
+
+	<h1>LISTADO DE LIBROS</h1>
+	<table border=1>
+		<thead>
+			<tr>
+				<th>Id
+				<th>Nombre
+				<th>Posicion
+				<th>Borrar
+				<th>Modificar
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${empleados.empty}">
+				<td colspan="2">No hay empleados disponibles</td>
+			</tr>
+			<tr th:each="empleado : ${empleados}">
+				<td><span th:text="${empleado.id}"></span></td>
+				<td><span th:text="${empleado.nombre}"></span></td>
+				<td><span th:text="${empleado.posicion}"></span></td>
+				<td><a th:href="@{/borrado/}+${empleado.id}">Borrar</a></td>
+				<td><a th:href="@{/modificar/}+${empleado.id}">Modificar</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<form th:action="${action}" th:object="${empleado}" method="post">
+		<br>ID: <input type=text th:field="*{id}" th:value="*{id}">
+		<br>NOMBRE EMPLEADO: <input type=text
+			th:field="*{nombre}" th:value="*{nombre}"> 
+		<br>POSICION:
+		<select th:field="*{posicion}">
+			<option
+				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
+				th:value="${posicion}" th:text="${posicion.puesto}"></option>
+		</select> <br>
+		<input type=submit name=submit th:value="${boton}">
+	</form>
+</body>
+</html>
