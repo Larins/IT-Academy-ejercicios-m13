@@ -1,9 +1,10 @@
-/*package com.example.demo.repository;
+package com.example.demo.repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 import com.example.demo.bean.Libro;
+import com.example.demo.bean.Tematica;
 
 public class BaseDatos2 {
 
@@ -31,7 +32,7 @@ public class BaseDatos2 {
 			preparedStmt.setString (3, libro.getAutor());
 			preparedStmt.setString (4, libro.getEditorial());
 			preparedStmt.setString (5, libro.getFecha());
-			preparedStmt.setString (6, libro.getTematica());
+			preparedStmt.setString (6, libro.getTematica().toString());
 			preparedStmt.executeUpdate();
 		} catch (SQLException ex) {
 			System.out.print(ex.getMessage());
@@ -58,12 +59,11 @@ public class BaseDatos2 {
 
 		try {
 			PreparedStatement preparedStmt = conexion.prepareStatement(query);
-			preparedStmt.setInt (1, libro.getId());
-			preparedStmt.setString (2, libro.getTitulo());
-			preparedStmt.setString (3, libro.getAutor());
-			preparedStmt.setString (4, libro.getEditorial());
-			preparedStmt.setString (5, libro.getFecha());
-			preparedStmt.setString (6, libro.getTematica());
+			preparedStmt.setString (1, libro.getTitulo());
+			preparedStmt.setString (2, libro.getAutor());
+			preparedStmt.setString (3, libro.getEditorial());
+			preparedStmt.setString (4, libro.getFecha());
+			preparedStmt.setString (5, libro.getTematica().toString());
 			preparedStmt.setInt (6, libro.getId());
 			System.out.println(preparedStmt.toString());
 			preparedStmt.executeUpdate();
@@ -82,7 +82,7 @@ public class BaseDatos2 {
  			s.execute(sql);
  			ResultSet rs = s.getResultSet();
 			rs.next();
-			libro = new Libro(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+			libro = new Libro(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),Tematica.valueOf(rs.getString(6)));
  		} catch (SQLException ex) {
  			System.out.print(ex.getMessage());
  		}
@@ -99,7 +99,7 @@ public class BaseDatos2 {
  			s.execute(sql);
  			ResultSet rs = s.getResultSet();
  			while (rs.next()) {
-				Libro libro = new Libro(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				Libro libro = new Libro(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),Tematica.valueOf(rs.getString(6)));
  				lista.add(libro);
  			}
  		} catch (SQLException ex) {
@@ -125,4 +125,4 @@ public class BaseDatos2 {
  		}
  		return check;
  	}
-}*/
+}
