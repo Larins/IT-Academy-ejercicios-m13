@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>LISTADO DE LIBROS</title>
+<title>LISTADO DE EMPLEADOS</title>
 </head>
 <body>
 	<h3>
@@ -10,7 +10,7 @@
 			th:text="${usuario.password}"></span>
 	</h3>
 
-	<h1>LISTADO DE LIBROS</h1>
+	<h1>LISTADO DE EMPLEADOS</h1>
 	<table border=1>
 		<thead>
 			<tr>
@@ -30,6 +30,7 @@
 				<td><span th:text="${empleado.id}"></span></td>
 				<td><span th:text="${empleado.nombre}"></span></td>
 				<td><span th:text="${empleado.posicion.puesto}"></span></td>
+				<td><span th:text="${empleado.posicion.salario}"></span></td>
 				<td><a th:href="@{/borrado/}+${empleado.id}">Borrar</a></td>
 				<td><a th:href="@{/modificar/}+${empleado.id}">Modificar</a></td>
 			</tr>
@@ -43,14 +44,16 @@
 		<select th:field="*{posicion}">
 			<option
 				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
-				th:value="${posicion}" th:text="${posicion.puesto}"></option>
+				th:value="${posicion.puesto}" th:text="${posicion.puesto}"></option>
 		</select> 
 		<br>SALARIO:
-		<select th:field="*{posicion}">
+		<input type=text field="*{empleado.salario}" value="*{empleado.salario}" readonly>
+		<!-- <select th:field="*{posicion}">
 			<option
 				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
-				th:value="${posicion}" th:text="${posicion.salario}"></option>
-		</select> 
+				th:value="${posicion.salario}" th:text="${posicion.salario}"></option>
+		</select>  -->
+		<br>
 		<br><input type=submit name=submit th:value="${boton}">
 	</form>
 </body>

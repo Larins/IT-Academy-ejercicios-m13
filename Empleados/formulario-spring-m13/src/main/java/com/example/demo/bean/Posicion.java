@@ -8,8 +8,9 @@ public enum Posicion { //Sustituye a TEMATICA
 	private String puesto;
 	private int salario;
 
-	private Posicion(String pos, int salario) {
-		this.puesto = pos;
+	private Posicion(String puesto, int salario) {
+		this.puesto = puesto;
+		this.salario = salario;
 	}
 
 	public String getPuesto() {
