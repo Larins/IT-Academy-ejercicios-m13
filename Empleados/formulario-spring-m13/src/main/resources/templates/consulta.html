@@ -37,17 +37,22 @@
 		</tbody>
 	</table>
 	<form th:action="${action}" th:object="${empleado}" method="post">
-		<br>ID: <input type=text th:field="*{id}" th:value="*{id}">
+		<br>ID: <input type=text th:field="*{id}" value="*{id}">
 		<br>NOMBRE EMPLEADO: <input type=text
 			th:field="*{nombre}" th:value="*{nombre}"> 
 		<br>POSICION:
-		<select th:field="*{posicion}">
+			<select th:field="*{posicion}">
 			<option
 				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
-				th:value="${posicion.puesto}" th:text="${posicion.puesto}"></option>
+				th:value="${posicion}" 
+				th:text="${posicion.puesto}">
+			</option>
 		</select> 
 		<br>SALARIO:
-		<input type=text field="*{empleado.salario}" value="*{empleado.salario}" readonly>
+			<input 
+				type=text 
+				th:field="*{posicion}"
+				value="${posicion.salario}">
 		<!-- <select th:field="*{posicion}">
 			<option
 				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
