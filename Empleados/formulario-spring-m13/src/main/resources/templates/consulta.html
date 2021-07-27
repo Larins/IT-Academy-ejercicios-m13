@@ -2,16 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>LISTADO DE EMPLEADOS</title>
+<title>PLANTILLA: LISTADO</title>
 </head>
-<body>
-	<h3>
-		Login: <span th:text="${usuario.nombre}"></span> - Password: <span
-			th:text="${usuario.password}"></span>
-	</h3>
+<body 
+	 style="background-color:LightYellow;
+	 font-family:monospace;
+	 color:DarkOliveGreen;
+	 text-align:center;">
+	<h5>
+		Login: 
+			<span 
+				th:text="${usuario.nombre}">
+			</span> 
+		- Password: 
+			<span
+				th:text="${usuario.password}">
+			</span>
+	</h5>
 
-	<h1>LISTADO DE EMPLEADOS</h1>
-	<table border=1>
+	<h1>PLANTILLA: LISTADO</h1>
+	<table style="width:100%"; border=1>
 		<thead>
 			<tr>
 				<th>Id
@@ -38,25 +48,25 @@
 			</tr>
 		</tbody>
 	</table>
-	<form 
+	<form style="text-align: left; display:flex; flex-direction: column; align-items: center"
 		th:action="${action}" 
 		th:object="${empleado}" 
 		method="post">
 	<br>
-		<br>ID:              
+		ID (autom&aacutetico):
+		<br>          
 			<input 
 				type=text 
 				th:field="*{id}"     
 				value="*{id}" read>
-	   		&nbsp(No introducir, se modificar&aacute autom&aacuteticamente).
 			<br>
-		<br>PERSONA: 
+		NOMBRE DE LA PERSONA: 
 			<input 
 				type=text 
 				th:field="*{nombre}" 
 				value="*{nombre}">
-			<br> 		
-		<br>POSICION:		
+			<br>		
+		POSICION:		
 			<select th:field="*{posicion}">
 				<option
 					th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
@@ -65,14 +75,21 @@
 				</option>						
 			</select> 
 			<br>
-	   <br>SALARIO: 
+	   	SALARIO (autom&aacutetico): 
+	   		<br>
 	   		<input 
 	   			type=text 
 	   			name=salario 
 	   			th:value="*{posicion?.salario}" readonly> 
-	   		&nbsp(No introducir, se modificar&aacute autom&aacuteticamente).
 			<br>
 		<br><input type=submit name=submit th:value="${boton}">
+		<br>
 	</form>
+	<footer style="color:Teal;text-align:center;">
+		<ul>
+			<hr style="border:30px;"><hr style="color:Teal;">
+			<br>Lara Saiz Moya - IT Academy - Julio 2021
+		</ul>
+	</footer>
 </body>
 </html>
