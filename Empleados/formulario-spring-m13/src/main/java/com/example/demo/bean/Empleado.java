@@ -16,6 +16,7 @@ public class Empleado { //Sustituye a LIBRO
 
 	@Column(name="nombre", nullable=false, length=30)
 	private String nombre;
+	private int salario;
 
 	//Para usar combobox usamos la siguiente declaracion:
 	@Column(name="POSICION")
@@ -25,10 +26,12 @@ public class Empleado { //Sustituye a LIBRO
 	public Empleado(int id, String nombre, Posicion posicion) {
 		this.id = id;
 		this.nombre = nombre;
-		this.posicion = posicion;
+		this.posicion = posicion;	
 	}
 	
-	public Empleado() {}
+	public Empleado() {
+		
+	}
 
 	public int getId() {
 		return id;
@@ -53,6 +56,13 @@ public class Empleado { //Sustituye a LIBRO
 	public void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 	}
-	
+
+	public int getSalario() {
+		return salario;
+	}
+
+	public void setSalario(int salario) {
+		this.salario = salario;
+	}
 	
 }

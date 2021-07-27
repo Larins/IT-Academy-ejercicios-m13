@@ -18,6 +18,7 @@
 				<th>Nombre
 				<th>Posicion
 				<th>Salario
+				<th>SalarioBD
 				<th>Borrar
 				<th>Modificar
 			</tr>
@@ -31,34 +32,46 @@
 				<td><span th:text="${empleado.nombre}"></span></td>
 				<td><span th:text="${empleado.posicion.puesto}"></span></td>
 				<td><span th:text="${empleado.posicion.salario}"></span></td>
+				<td><span th:text="${empleado.salario}"></span></td>
 				<td><a th:href="@{/borrado/}+${empleado.id}">Borrar</a></td>
 				<td><a th:href="@{/modificar/}+${empleado.id}">Modificar</a></td>
 			</tr>
 		</tbody>
 	</table>
-	<form th:action="${action}" th:object="${empleado}" method="post">
-		<br>ID: <input type=text th:field="*{id}" value="*{id}">
-		<br>NOMBRE EMPLEADO: <input type=text
-			th:field="*{nombre}" th:value="*{nombre}"> 
-		<br>POSICION:
-			<select th:field="*{posicion}">
-			<option
-				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
-				th:value="${posicion}" 
-				th:text="${posicion.puesto}">
-			</option>
-		</select> 
-		<br>SALARIO:
+	<form 
+		th:action="${action}" 
+		th:object="${empleado}" 
+		method="post">
+	<br>
+		<br>ID:              
 			<input 
 				type=text 
-				th:field="*{posicion}"
-				value="${posicion.salario}">
-		<!-- <select th:field="*{posicion}">
-			<option
-				th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
-				th:value="${posicion.salario}" th:text="${posicion.salario}"></option>
-		</select>  -->
-		<br>
+				th:field="*{id}"     
+				value="*{id}" read>
+	   		&nbsp(No introducir, se modificar&aacute autom&aacuteticamente).
+			<br>
+		<br>PERSONA: 
+			<input 
+				type=text 
+				th:field="*{nombre}" 
+				value="*{nombre}">
+			<br> 		
+		<br>POSICION:		
+			<select th:field="*{posicion}">
+				<option
+					th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
+					th:value="${posicion}" 
+					th:text="${posicion.puesto}">
+				</option>						
+			</select> 
+			<br>
+	   <br>SALARIO: 
+	   		<input 
+	   			type=text 
+	   			name=salario 
+	   			th:value="*{posicion?.salario}" readonly> 
+	   		&nbsp(No introducir, se modificar&aacute autom&aacuteticamente).
+			<br>
 		<br><input type=submit name=submit th:value="${boton}">
 	</form>
 </body>

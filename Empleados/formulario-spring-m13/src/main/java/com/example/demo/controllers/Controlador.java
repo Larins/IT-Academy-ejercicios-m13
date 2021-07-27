@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.bean.Empleado;
-import com.example.demo.bean.Tematica;
+import com.example.demo.bean.Posicion;
 import com.example.demo.bean.Usuario;
-import com.example.demo.repository.BaseDatos2;
-import com.example.demo.repository.BaseDatos;
 import com.example.demo.repository.BaseDatos3Service;
 
 @Controller // Lo convertimos en un servlet que atiende peticiones HTTP
@@ -42,7 +40,7 @@ public class Controlador {
 			model.addAttribute("usuario", usuario);
 			this.usuario = usuario;
 			model.addAttribute("empleados", empleados);
-			model.addAttribute("empleado", new Empleado());
+			model.addAttribute("empleado", new Empleado(0,"",Posicion.JUNIOR));
 			model.addAttribute("boton", "Insertar empleado");
 			model.addAttribute("action", "/insertar");
 			return "consulta";
@@ -54,12 +52,13 @@ public class Controlador {
 	// HANDLER INSERCION
 	@PostMapping("/insertar")
 	public String insertar(Empleado empleado, Model model) {
+		empleado.setSalario(empleado.getPosicion().getSalario());
 		bd.inserta(empleado);
 		ArrayList<Empleado> empleados = bd.getEmpleados();
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
 		model.addAttribute("empleados", empleados);
-		model.addAttribute("empleado", new Empleado());
+		model.addAttribute("empleado", new Empleado(0,"",Posicion.JUNIOR));
 		model.addAttribute("boton", "Insertar empleado");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
@@ -73,7 +72,7 @@ public class Controlador {
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
 		model.addAttribute("empleados", empleados);
-		model.addAttribute("empleado", new Empleado());
+		model.addAttribute("empleado", new Empleado(0,"",Posicion.JUNIOR));
 		model.addAttribute("boton", "Insertar empleado");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
@@ -96,12 +95,13 @@ public class Controlador {
 	// Handler modificar POST (enviar formulario)
 	@PostMapping("/modificar")
 	public String modificar2(Empleado empleado, Model model) {
+		empleado.setSalario(empleado.getPosicion().getSalario());
 		bd.modifica(empleado);
 		ArrayList<Empleado> empleados = bd.getEmpleados();
 		model.addAttribute("usuario", this.usuario);
 		// this.usuario = usuario;
 		model.addAttribute("empleados", empleados);
-		model.addAttribute("empleado", new Empleado());
+		model.addAttribute("empleado", new Empleado(0,"",Posicion.JUNIOR));
 		model.addAttribute("boton", "Actualizar empleado");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
